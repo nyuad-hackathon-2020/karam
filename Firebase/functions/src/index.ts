@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-
+admin.initializeApp()
 "use strict"
 
 export const order_queue = functions.https.onRequest((request, response) => {
