@@ -73,10 +73,17 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       bottomNavigationBar: CurvedNavigationBar(
         onTap: _onItemTapped,
+        buttonBackgroundColor: Colors.transparent,
         items: <Widget>[
-          Icon(Icons.notifications),
-          Icon(Icons.restaurant),
-          Icon(Icons.menu),
+          Icon(
+            Icons.notifications
+          ),
+          Icon(
+            Icons.restaurant
+          ),
+          Icon(
+            Icons.menu
+          ),
         ],
       ),
     );
