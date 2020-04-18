@@ -1,4 +1,4 @@
-package com.example.karam
+package com.nyuad2020.karam
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

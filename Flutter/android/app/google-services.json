@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "26787926679",
+    "firebase_url": "https://karam-nyuad.firebaseio.com",
+    "project_id": "karam-nyuad",
+    "storage_bucket": "karam-nyuad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:26787926679:android:6c9cfdf0dad45701c58fd2",
+        "android_client_info": {
+          "package_name": "com.nyuad2020.karam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "26787926679-5mb1nln4j3907flihgq1ns2mke5qc3ir.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nyuad2020.karam",
+            "certificate_hash": "83ab10993febb1777b155a9e3d82f7911731b339"
+          }
+        },
+        {
+          "client_id": "26787926679-c4ocd78ncuepis9b86vthif9mm461ni8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdN7Exo6OxeI8MTawcoaYsd6CEWgeTqPg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "26787926679-c4ocd78ncuepis9b86vthif9mm461ni8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
