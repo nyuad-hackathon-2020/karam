@@ -4,7 +4,7 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="karam"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyAdN7Exo6OxeI8MTawcoaYsd6CEWgeTqPg"/>
         <activity
