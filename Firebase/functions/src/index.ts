@@ -10,7 +10,7 @@ export const order_queue = functions.https.onRequest((request, response) => {
     const product = request.get('content')!
     const timeReceived = Date()
     const db = admin.firestore()
-    db.collection('restaurants').doc(seller).collection('orders')
+    return db.collection('restaurants').doc(seller).collection('orders')
     .add({
         'by' : sender,
         'at' : timeReceived,
