@@ -1,3 +1,4 @@
+import 'package:conditional_builder/conditional_builder.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:karam/home_screens/orders.dart';
@@ -30,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var navBarTitles = ['Notifications', null, 'Orders'];
     var navBarItemsScreens = [
       NotificationsScreen(),
       ProductSearch(searchFilter: searchFilterController.text),
@@ -37,23 +39,28 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(50),
-            ),
-            child: TextFormField(
-              textAlign: TextAlign.center,
-              controller: searchFilterController,
-              decoration: InputDecoration(
-                isDense: true,
-                contentPadding: EdgeInsets.symmetric(vertical: 8),
-                hintText: 'Search Products',
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(50),
+        centerTitle: true,
+        title: ConditionalBuilder(
+          condition: _selectedIndex == 1,
+          fallback: (context) => Text(navBarTitles[_selectedIndex]),
+          builder: (context) => Center(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(50),
+              ),
+              child: TextFormField(
+                textAlign: TextAlign.center,
+                controller: searchFilterController,
+                decoration: InputDecoration(
+                  isDense: true,
+                  contentPadding: EdgeInsets.symmetric(vertical: 8),
+                  hintText: 'Search Products',
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(50),
+                  ),
                 ),
               ),
             ),
@@ -68,21 +75,34 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: navBarItemsScreens[_selectedIndex],
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          //open cart
+        },
         child: Icon(Icons.shopping_cart),
       ),
       bottomNavigationBar: CurvedNavigationBar(
         onTap: _onItemTapped,
-        buttonBackgroundColor: Colors.transparent,
+        backgroundColor: Color.fromARGB(50, 0, 0, 0),
+        buttonBackgroundColor: Color.fromARGB(255, 0x66, 0xBA, 0x3f),
+        color: Color.fromARGB(255, 0xEF, 0xEF, 0xEF),
         items: <Widget>[
           Icon(
-            Icons.notifications
+            Icons.notifications,
+            color: _selectedIndex == 0
+                ? Colors.white
+                : IconTheme.of(context).color,
           ),
           Icon(
-            Icons.restaurant
+            Icons.restaurant,
+            color: _selectedIndex == 1
+                ? Colors.white
+                : IconTheme.of(context).color,
           ),
           Icon(
-            Icons.menu
+            Icons.menu,
+            color: _selectedIndex == 2
+                ? Colors.white
+                : IconTheme.of(context).color,
           ),
         ],
       ),
