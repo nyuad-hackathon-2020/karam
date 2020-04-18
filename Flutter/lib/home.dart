@@ -1,6 +1,8 @@
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:karam/business-objects/cart.dart';
 import 'package:karam/home_screens/orders.dart';
 import 'package:karam/home_screens/product_search.dart';
 
@@ -81,8 +83,27 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           //TODO open cart
-        },        
-        child: Icon(Icons.shopping_cart),
+        },
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: Icon(Icons.shopping_cart),
+            ),
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: ValueListenableBuilder<Box<int>>(
+                valueListenable: Cart.itemsListenable,
+                builder: (context, _, __) {
+                  return Text(
+                    Cart.totalCartAmount.toString(),
+                    style: TextStyle(color: Colors.black),
+                  );
+                },
+              ),
+            )
+          ],
+        ),
       ),
       bottomNavigationBar: CurvedNavigationBar(
         onTap: _onItemTapped,
