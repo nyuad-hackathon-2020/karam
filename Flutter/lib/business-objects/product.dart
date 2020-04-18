@@ -1,10 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Category {
+class Product {
   final DocumentSnapshot snapshot;
 
-  Category(this.snapshot);
+  Product(this.snapshot);
+
   String get id => snapshot.documentID;
   String get name => snapshot.data['name'];
-  String get imagePath => snapshot.data['img'];
+  int get available => snapshot.data['available'];
+  String get imagePath => snapshot.data['imagePath'];
+  DateTime get expiryDate =>
+      (snapshot.data['expiry_date'] as Timestamp).toDate();
+  int get price => snapshot.data['price'];
 }

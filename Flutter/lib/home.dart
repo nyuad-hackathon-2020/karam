@@ -34,7 +34,11 @@ class _HomeScreenState extends State<HomeScreen> {
     var navBarTitles = ['Notifications', null, 'Orders'];
     var navBarItemsScreens = [
       NotificationsScreen(),
-      ProductSearch(searchFilter: searchFilterController.text),
+      ProductSearch(
+        searchFilter: searchFilterController.text,
+        changeFilter: (newFilterText) =>
+            searchFilterController.text = newFilterText,
+      ),
       OrdersScreen()
     ];
     return Scaffold(
@@ -76,15 +80,15 @@ class _HomeScreenState extends State<HomeScreen> {
       body: navBarItemsScreens[_selectedIndex],
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          //open cart
-        },
+          //TODO open cart
+        },        
         child: Icon(Icons.shopping_cart),
       ),
       bottomNavigationBar: CurvedNavigationBar(
         onTap: _onItemTapped,
-        backgroundColor: Color.fromARGB(50, 0, 0, 0),
+        backgroundColor: Color.fromARGB(0, 0, 0, 0),
         buttonBackgroundColor: Color.fromARGB(255, 0x66, 0xBA, 0x3f),
-        color: Color.fromARGB(255, 0xEF, 0xEF, 0xEF),
+        color: Color.fromARGB(255, 0xE0, 0xE0, 0xE0),
         items: <Widget>[
           Icon(
             Icons.notifications,
