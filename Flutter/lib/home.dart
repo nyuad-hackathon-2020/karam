@@ -72,12 +72,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () {},
-          )
-        ],
       ),
       body: navBarItemsScreens[_selectedIndex],
       floatingActionButton: FloatingActionButton(
