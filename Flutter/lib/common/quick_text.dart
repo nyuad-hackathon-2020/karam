@@ -5,9 +5,15 @@ class QuickText extends StatelessWidget {
   final Color color;
   final double fontSize;
   final FontWeight fontWeight;
-  const QuickText(
-      {Key key, this.text, this.color = Colors.white, this.fontSize = 24,this.fontWeight = FontWeight.w500})
-      : super(key: key);
+  final TextAlign alignment;
+  const QuickText({
+    Key key,
+    this.text,
+    this.color = Colors.white,
+    this.fontSize = 24,
+    this.fontWeight = FontWeight.w500,
+    this.alignment = TextAlign.center,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Text(
@@ -20,7 +26,7 @@ class QuickText extends StatelessWidget {
         letterSpacing: 0.05,
         color: color,
       ),
-      textAlign: TextAlign.center,
+      textAlign: alignment,
     );
   }
 }
