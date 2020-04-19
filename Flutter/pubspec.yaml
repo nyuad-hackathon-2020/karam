@@ -1,6 +1,6 @@
 name: karam
 description: NYUAD 2020 Hackathon project.
-version: 1.0.0+2
+version: 1.1.0+1
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
