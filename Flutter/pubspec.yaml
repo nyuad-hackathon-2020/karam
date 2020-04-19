@@ -21,13 +21,13 @@ dependencies:
   firebase_storage: ^3.1.5
   #close proximity check
   geoflutterfire: ^2.1.0
+
   google_maps_flutter: ^0.5.26
   cache_image: ^1.0.5
   hive: ^1.4.1+1
   hive_flutter: ^0.3.0+2
-
+  grouped_list: ^2.3.0
   image_picker: ^0.6.5
-
 
 dev_dependencies:
   flutter_test:
