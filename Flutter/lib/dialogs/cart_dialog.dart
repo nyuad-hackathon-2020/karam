@@ -87,10 +87,12 @@ class CartDialog extends StatelessWidget {
                   order['content'][cartItem.storeId] as Map<String, dynamic>;
               if (store == null) {
                 order['content'][cartItem.storeId] =
-                    store = Map<String, dynamic>();
+                    store = (Map<String, dynamic>());
+                store['status'] = 0;
               }
               store[cartItem.productId] = cartItem.amount;
             }
+
             //add order object
             var ref = await Firestore.instance.collection('orders').add(order);
             //add to active orders too
@@ -106,7 +108,7 @@ class CartDialog extends StatelessWidget {
               await rest.reference
                   .setData({'active_orders': curActive}, merge: true);
             }
-            
+
             await CartRepo.items.clear();
             Navigator.pop(context, ref);
           },
