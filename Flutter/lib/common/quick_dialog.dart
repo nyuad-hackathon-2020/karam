@@ -50,28 +50,30 @@ class QuickDialog extends StatelessWidget {
         ),
       ),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          ...content,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              if (onConfirm != null)
-                QucikConfirmCancelButton(
-                  text: confirmText,
-                  isConfirm: true,
-                  onClick: onConfirm,
-                ),
-              if (onCancel != null)
-                QucikConfirmCancelButton(
-                  text: cancelText,
-                  isConfirm: false,
-                  onClick: onCancel,
-                )
-            ],
-          )
-        ],
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ...content,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                if (onConfirm != null)
+                  QucikConfirmCancelButton(
+                    text: confirmText,
+                    isConfirm: true,
+                    onClick: onConfirm,
+                  ),
+                if (onCancel != null)
+                  QucikConfirmCancelButton(
+                    text: cancelText,
+                    isConfirm: false,
+                    onClick: onCancel,
+                  )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
