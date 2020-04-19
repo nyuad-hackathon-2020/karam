@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:cache_image/cache_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -94,7 +91,23 @@ class CartDialog extends StatelessWidget {
               }
               store[cartItem.productId] = cartItem.amount;
             }
+            //add order object
             var ref = await Firestore.instance.collection('orders').add(order);
+            //add to active orders too
+            for (var restKeys
+                in (order['content'] as Map<String, dynamic>).keys) {
+              var rest = await Firestore.instance
+                  .collection('restaurants')
+                  .document(restKeys)
+                  .get();
+              var curActive =
+                  List<DocumentReference>.from(rest.data['active_orders']);
+              curActive.add(ref);
+              await rest.reference
+                  .setData({'active_orders': curActive}, merge: true);
+            }
+            
+            await CartRepo.items.clear();
             Navigator.pop(context, ref);
           },
           onCancel: () {

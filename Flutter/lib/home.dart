@@ -1,8 +1,12 @@
+import 'dart:developer';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:karam/business-objects/cart_item.dart';
+import 'package:karam/dialogs/after_cart_dialog.dart';
 import 'package:karam/dialogs/cart_dialog.dart';
 import 'package:karam/home_screens/orders.dart';
 import 'package:karam/home_screens/product_search.dart';
@@ -77,8 +81,11 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: navBarItemsScreens[_selectedIndex],
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(builder: (context) => CartDialog(), context: context);
+        onPressed: () async {
+          var orderRef = await showDialog<DocumentReference>(
+              builder: (context) => CartDialog(), context: context);
+          await showDialog(context: context, builder:(context)=> AfterOrderDialog());
+          //log(orderRef.documentID);
         },
         child: Stack(
           children: [
@@ -93,11 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 builder: (context, _, __) {
                   return Container(
                     decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.lightGreen
-
-                    ),
-                    
+                        shape: BoxShape.circle, color: Colors.lightGreen),
                     child: Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: Text(
