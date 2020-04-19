@@ -27,7 +27,8 @@ dependencies:
   hive: ^1.4.1+1
   hive_flutter: ^0.3.0+2
   grouped_list: ^2.3.0
-  
+  image_picker: ^0.6.5
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
