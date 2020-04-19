@@ -1,5 +1,10 @@
+import 'dart:io';
+import 'package:path/path.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:karam/common/utils.dart';
 
 class DonateDialog extends StatefulWidget {
@@ -10,6 +15,8 @@ class DonateDialog extends StatefulWidget {
 }
 
 class _DonateDialogState extends State<DonateDialog> {
+  String productImageURL = "";
+
   final String restID = "PnFt6Lqisc0Ncjlgthnw";
 
   int selectedAmount = 1;
@@ -17,6 +24,23 @@ class _DonateDialogState extends State<DonateDialog> {
 
   TextEditingController nameController = TextEditingController();
   TextEditingController datePickerController = TextEditingController();
+
+  uploadImage() async {
+    File image = await ImagePicker.pickImage(source: ImageSource.camera);
+
+    if (image == null) {
+      return null;
+    }
+
+    final StorageTaskSnapshot downloadURL =
+        await FirebaseStorage.instance.ref().child("products/" + basename(image.path)).putFile(image).onComplete;
+
+    final String url = (await downloadURL.ref.getDownloadURL());
+
+    setState(() {
+      productImageURL = url;
+    });
+  }
 
   @override
   void dispose() {
@@ -37,10 +61,10 @@ class _DonateDialogState extends State<DonateDialog> {
           "name": nameController.text,
           "expiry_date": selectedDate,
           "available": selectedAmount,
-          "img": "",
-        }); //.then(() => Navigator.pop(context));
-
-        print("done");
+          "img": productImageURL.isEmpty ? "" : productImageURL,
+        }).then((onValue) {
+          Navigator.pop(context);
+        });
       },
       onCancel: () {
         Navigator.pop(context, null);
@@ -48,9 +72,17 @@ class _DonateDialogState extends State<DonateDialog> {
       content: <Widget>[
         Container(
           height: MediaQuery.of(context).size.height * 0.3,
-          child: QuickRoundedImage(
-            fit: BoxFit.fitHeight,
-          ),
+          child: productImageURL.isNotEmpty
+              ? QuickRoundedImage(
+                  imagePath: productImageURL,
+                  fit: BoxFit.fitHeight,
+                )
+              : FlatButton(
+                  child: Icon(Icons.add_a_photo),
+                  onPressed: () {
+                    uploadImage();
+                  },
+                ),
         ),
         TextFormField(
           controller: nameController,
