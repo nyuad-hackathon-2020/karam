@@ -169,7 +169,7 @@ class _DrawImageWithTextCard extends StatelessWidget {
               image: DecorationImage(
                 fit: BoxFit.cover,
                 image: imagePath != null
-                    ? CacheImage('$imagePath')
+                    ? CacheImage(imagePath)
                     : AssetImage('assets/food_plate.jpg'),
               ),
             ),
