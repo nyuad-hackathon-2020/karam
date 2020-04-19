@@ -91,9 +91,20 @@ class _HomeScreenState extends State<HomeScreen> {
               child: ValueListenableBuilder<Box<CartItem>>(
                 valueListenable: CartRepo.itemsListenable,
                 builder: (context, _, __) {
-                  return Text(
-                    CartRepo.totalCartAmount.toString(),
-                    style: TextStyle(color: Colors.black),
+                  return Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.lightGreen
+
+                    ),
+                    
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Text(
+                        CartRepo.totalCartAmount.toString(),
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
                   );
                 },
               ),

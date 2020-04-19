@@ -11,7 +11,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Hive.initFlutter();
-  await Hive.deleteBoxFromDisk('cart');
+  //await Hive.deleteBoxFromDisk('cart');
   Hive.registerAdapter(CartItemAdapter());
   CartRepo.items = await Hive.openBox<CartItem>('cart');
   runApp(MyApp());

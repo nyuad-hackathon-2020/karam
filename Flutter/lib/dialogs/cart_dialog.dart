@@ -44,8 +44,7 @@ class CartDialog extends StatelessWidget {
                                 return Text(aRestSnapshot.error.toString());
                               if (aRestSnapshot.connectionState ==
                                       ConnectionState.waiting ||
-                                  !aRestSnapshot.hasData)
-                                return Waiting();
+                                  !aRestSnapshot.hasData) return Waiting();
 
                               var restSnapShot = aRestSnapshot.data;
                               var rest = Restaurant(restSnapShot);
@@ -60,8 +59,7 @@ class CartDialog extends StatelessWidget {
                                     return Text(aProdSnapshot.error.toString());
                                   if (aProdSnapshot.connectionState ==
                                           ConnectionState.waiting ||
-                                      !aProdSnapshot.hasData)
-                                    return Waiting();
+                                      !aProdSnapshot.hasData) return Waiting();
 
                                   var prodSnapShot = aProdSnapshot.data;
                                   var prod = Product(prodSnapShot, rest);
@@ -81,8 +79,23 @@ class CartDialog extends StatelessWidget {
               ),
             )
           ],
-          onConfirm: () {
-            //TODO send cart to firebase function
+          onConfirm: () async {
+            var cart = CartRepo.items.values;
+            Map<String, dynamic> order = {
+              'content': Map<String, dynamic>(),
+              'buyer': 'userid',
+            };
+            for (var cartItem in cart) {
+              var store =
+                  order['content'][cartItem.storeId] as Map<String, dynamic>;
+              if (store == null) {
+                order['content'][cartItem.storeId] =
+                    store = Map<String, dynamic>();
+              }
+              store[cartItem.productId] = cartItem.amount;
+            }
+            var ref = await Firestore.instance.collection('orders').add(order);
+            Navigator.pop(context, ref);
           },
           onCancel: () {
             Navigator.pop(context);
@@ -125,7 +138,7 @@ class _DrawCartItem extends StatelessWidget {
                 color: Colors.black,
                 text: '${amount.toString()} x ${prod.name}',
               ),
-              Row(                
+              Row(
                 children: [
                   QuickText(
                     fontWeight: FontWeight.normal,
