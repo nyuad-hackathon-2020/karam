@@ -3,11 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:firestore_ui/animated_firestore_grid.dart';
 import 'package:flutter/material.dart';
-import 'package:karam/business-objects/cart.dart';
+import 'package:karam/business-objects/cart-repo.dart';
 import 'package:karam/business-objects/category.dart';
 import 'package:karam/business-objects/product.dart';
 import 'package:karam/business-objects/restaurant.dart';
 import 'package:karam/business-objects/restaurant_product_search_result.dart';
+import 'package:karam/common/waiting.dart';
+import 'package:karam/dialogs/select_quantity_dialog.dart';
 
 class ProductSearch extends StatefulWidget {
   final String searchFilter;
@@ -66,7 +68,7 @@ class _ProductSearchState extends State<ProductSearch> {
                 for (var rest in allRests) {
                   var allProds = (await rest.products.getDocuments())
                       .documents
-                      .map((f) => Product(f))
+                      .map((f) => Product(f, rest))
                       .where((x) =>
                           DateTime.now().isBefore(x.expiryDate) &&
                           x.available > 0 &&
@@ -86,7 +88,7 @@ class _ProductSearchState extends State<ProductSearch> {
               if (snapshot.hasError) return Text(snapshot.error.toString());
 
               if (snapshot.connectionState == ConnectionState.waiting ||
-                  !snapshot.hasData) return CircularProgressIndicator();
+                  !snapshot.hasData) return Waiting();
 
               //get a list of products
               var filteredRests = snapshot.data.values.toList();
@@ -124,7 +126,15 @@ class _ProductSearchState extends State<ProductSearch> {
                       var prod = prods[index];
                       return InkWell(
                         onTap: () async {
-                          await Cart.addToCart(prod);
+                          var wantedQuantity = await showDialog<int>(
+                            context: context,
+                            builder: (context) {
+                              return SelectQuantityDialog(prod: prod);
+                            },
+                          );
+                          if (wantedQuantity != null) {
+                            await CartRepo.addToCart(prod, wantedQuantity);
+                          }
                         },
                         child: _DrawImageWithTextCard(
                           text: prod.name,
@@ -163,17 +173,18 @@ class _DrawImageWithTextCard extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           Positioned.fill(
-              child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: imagePath != null
-                    ? CacheImage(imagePath)
-                    : AssetImage('assets/food_plate.jpg'),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: imagePath != null
+                      ? CacheImage(imagePath)
+                      : AssetImage('assets/food_plate.jpg'),
+                ),
               ),
             ),
-          )),
+          ),
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(

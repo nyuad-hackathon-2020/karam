@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:karam/business-objects/restaurant.dart';
 
 class Product {
   final DocumentSnapshot snapshot;
-
-  Product(this.snapshot);
+  final Restaurant parent;
+  Product(this.snapshot, this.parent);
 
   String get id => snapshot.documentID;
   String get name => snapshot.data['name'];

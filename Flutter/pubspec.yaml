@@ -3,7 +3,7 @@ description: NYUAD 2020 Hackathon project.
 version: 1.0.0+2
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   flutter:
@@ -42,3 +42,14 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+  fonts:
+    - family: Cantarell
+      fonts:
+        - asset: assets/fonts/cantarell/Cantarell-Regular.ttf
+        - asset: assets/fonts/cantarell/Cantarell-Oblique.ttf
+          style: italic
+        - asset: assets/fonts/cantarell/Cantarell-BoldOblique.ttf
+          style: italic
+          weight: 700
+        - asset: assets/fonts/cantarell/Cantarell-Bold.ttf          
+          weight: 700

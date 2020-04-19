@@ -4,12 +4,16 @@ import 'package:karam/home.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-import 'business-objects/cart.dart';
+import 'business-objects/cart-repo.dart';
+import 'business-objects/cart_item.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Hive.initFlutter();
-  Cart.items = await Hive.openBox<int>('cart');
+  await Hive.deleteBoxFromDisk('cart');
+  Hive.registerAdapter(CartItemAdapter());
+  CartRepo.items = await Hive.openBox<CartItem>('cart');
   runApp(MyApp());
 }
 

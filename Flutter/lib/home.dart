@@ -2,10 +2,12 @@ import 'package:conditional_builder/conditional_builder.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:karam/business-objects/cart.dart';
+import 'package:karam/business-objects/cart_item.dart';
+import 'package:karam/dialogs/cart_dialog.dart';
 import 'package:karam/home_screens/orders.dart';
 import 'package:karam/home_screens/product_search.dart';
 
+import 'business-objects/cart-repo.dart';
 import 'home_screens/notifications.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -76,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: navBarItemsScreens[_selectedIndex],
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          //TODO open cart
+          showDialog(builder: (context) => CartDialog(), context: context);
         },
         child: Stack(
           children: [
@@ -86,11 +88,11 @@ class _HomeScreenState extends State<HomeScreen> {
             Positioned(
               bottom: 0,
               right: 0,
-              child: ValueListenableBuilder<Box<int>>(
-                valueListenable: Cart.itemsListenable,
+              child: ValueListenableBuilder<Box<CartItem>>(
+                valueListenable: CartRepo.itemsListenable,
                 builder: (context, _, __) {
                   return Text(
-                    Cart.totalCartAmount.toString(),
+                    CartRepo.totalCartAmount.toString(),
                     style: TextStyle(color: Colors.black),
                   );
                 },
@@ -100,6 +102,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       bottomNavigationBar: CurvedNavigationBar(
+        index: _selectedIndex,
         onTap: _onItemTapped,
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         buttonBackgroundColor: Color.fromARGB(255, 0x66, 0xBA, 0x3f),
