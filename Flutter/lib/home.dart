@@ -8,6 +8,7 @@ import 'package:hive/hive.dart';
 import 'package:karam/business-objects/cart_item.dart';
 import 'package:karam/dialogs/after_cart_dialog.dart';
 import 'package:karam/dialogs/cart_dialog.dart';
+import 'package:karam/dialogs/donate_dialog.dart';
 import 'package:karam/home_screens/orders.dart';
 import 'package:karam/home_screens/product_search.dart';
 
@@ -51,6 +52,15 @@ class _HomeScreenState extends State<HomeScreen> {
     ];
     return Scaffold(
       appBar: AppBar(
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.accessibility_new),
+            onPressed: () {
+              showDialog(
+                  context: context, builder: (context) => DonateDialog());
+            },
+          )
+        ],
         centerTitle: true,
         title: ConditionalBuilder(
           condition: _selectedIndex == 1,
@@ -84,7 +94,9 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () async {
           var orderRef = await showDialog<DocumentReference>(
               builder: (context) => CartDialog(), context: context);
-          await showDialog(context: context, builder:(context)=> AfterOrderDialog());
+          if (orderRef != null)
+            await showDialog(
+                context: context, builder: (context) => AfterOrderDialog());
           //log(orderRef.documentID);
         },
         child: Stack(
